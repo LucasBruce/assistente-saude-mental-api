@@ -1,0 +1,137 @@
+#CRIACAO DE TAREFAS:
+
+nome da branch: tarefa-bananinha-00;
+
+#FINALIZACAO DA TAREFA:
+
+merge tarefa-bananinha-00 na main; 
+47.25
+9.45
+
+obs: se houver conflitos resolve o conflito na tarefa-bananinha-00 e depois da o merge na main.
+
+#FRONTEND
+
+obsGeral: Não será necessário componentizar demais aplicação porque é uma aplicação pequena,
+então não haverá a necessidade de existirem muitos componentes. Não se apeguem ao design
+implementem o design da forma que acharem melhor, as imagens servem apenas como um guia.
+Caso acarrete muitos problemas e demore mais que o esperado então discutiremos a retirada
+desse passos. 
+
+#1. Tela home (tela principal)
+
+navbar(menu da tela)
+-cadastra-se
+-login
+
+#2. Tela cadastro
+
+-nome
+-username
+-email
+-senha
+
+obs: É preciso implementar uma forma de criptografar as senhas passadas pelo usuário 
+para que seja descriptografadas no backend.
+
+obs0: Implementem validações nos campos se possível.
+
+obs1: Após o cadastro o componente da tela de cadastrar precisa redirecionar para a tela de login.
+
+#3. Tela login
+
+-username/email
+-senha
+
+obs: Após a validação o componente da tela de login deve redirecionar parar tela chat.
+
+obs0: Após o cadastro o componente da tela de cadastrar precisa redirecionar para a tela de login.
+
+#4. Tela chat
+
+-username
+-assistente 
+
+obs: O username será acompanha como na imagem com icone padrão.
+
+obs0: O assistente será acompanhado com um icone padrão, mas diferento do username.
+
+obs1: A tela chat terá um navbar com apenas um ícone do tipo saída ou logout;
+
+#BACKEND
+
+obsGeral: O backend terá a responsabilidade de descriptografar as senhas que vêm do 
+frontend e salvar as informações do usuário no banco e fazer a autenticação do usuário.
+A tradução dos textos serão feitas no frontend.
+
+#1. Endpoint 
+
+POST: 
+{
+  nome
+  username
+  email
+  senha
+}
+
+obs: O back receberá essas informções e guardara no banco postegres.  
+
+#2. Endpoint 
+
+POST: 
+{
+  username/email
+  senha
+}
+
+obs: O back receberá essas informações e fará a decriptação das senhas 
+e verificar com o que existe no banco para saber se realmente é aquele
+usuário.
+
+#3. Endpoint
+
+GET:
+{
+  nome
+  username
+  isUsername: boolean
+}
+
+obs: Como já havia dito a autenticação será feita no back então terá 
+como retorno para a tela de login um boolean resultado do processamento do #2. Endpoint
+e outras informações que serão usadas pela tela chat.
+
+Stacks:
+
+- frontend: node angular;
+
+- backend: Java spring;
+
+- banco: postgres;
+
+- api chat-gpt
+
+- infraestrutura: heroku;
+
+- versionamento: git com github ou gitlab.
+
+obs: Como a gente não terá muito tempo então achei melhor focarmos na aplicação e não na infra.
+O heroku vai abstrair toda essa parte pra gente. Não é uma boa prática, mas como a gente não vai
+ter muito tempo então sem testes unitários também. 
+
+heroku suport:
+
+- OpenJDK 17 LTS
+- node version 18.15.0 LTS
+- postgres 13
+
+plano básico:
+
+9 dolares;
+
+reais 47,25 é uma estimativa porque o dolar hj está a 5,25; a gente faz o calculo quando realmente for usar
+
+9,45 para cada.
+
+
+
