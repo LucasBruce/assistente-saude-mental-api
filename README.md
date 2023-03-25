@@ -10,49 +10,6 @@ merge tarefa-bananinha-00 na main;
 
 obs: se houver conflitos resolve o conflito na tarefa-bananinha-00 e depois da o merge na main.
 
-#BACKEND
-
-obsGeral: O backend terá a responsabilidade de descriptografar as senhas que vêm do 
-frontend e salvar as informações do usuário no banco e fazer a autenticação do usuário.
-A tradução dos textos serão feitas no frontend.
-
-#1. Endpoint 
-
-POST: 
-{
-  nome
-  username
-  email
-  senha
-}
-
-obs: O back receberá essas informções e guardara no banco postegres.  
-
-#2. Endpoint 
-
-POST: 
-{
-  username/email
-  senha
-}
-
-obs: O back receberá essas informações e fará a decriptação das senhas 
-e verificar com o que existe no banco para saber se realmente é aquele
-usuário.
-
-#3. Endpoint
-
-GET:
-{
-  nome
-  username
-  isUsername: boolean
-}
-
-obs: Como já havia dito a autenticação será feita no back então terá 
-como retorno para a tela de login um boolean resultado do processamento do #2. Endpoint
-e outras informações que serão usadas pela tela chat.
-
 Stacks:
 
 - frontend: node angular;
