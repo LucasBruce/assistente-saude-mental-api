@@ -38,6 +38,7 @@ plano básico:
 
 9 dolares; 
 
-reais 47,52 é uma estimativa porque o dolar hj está a 5,25;
+reais 47,25 é uma estimativa porque o dolar hj está a 5,25;
+a gente faz o calculo quando realmente for usar
 
-9,50 para cada.
+9,45 para cada.
