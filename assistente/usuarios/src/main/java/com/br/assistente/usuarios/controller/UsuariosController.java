@@ -1,7 +1,7 @@
 package com.br.assistente.usuarios.controller;
 
 import com.br.assistente.usuarios.entidades.Usuarios;
-import com.br.assistente.usuarios.servicos.UsuarioNaoEncontradoException;
+import com.br.assistente.usuarios.servicos.exception.UsuarioNaoEncontradoException;
 import com.br.assistente.usuarios.servicos.UsuarioService;
 import com.br.assistente.usuarios.utils.Constantes;
 import io.swagger.v3.oas.annotations.Operation;
@@ -84,7 +84,19 @@ public class UsuariosController {
         }
     }
 
-
+    @DeleteMapping("{id}")
+    @Operation(summary = "Delete um usuário do sistema")
+    @ApiResponse(responseCode = "200", description = "Usuário deletado do sistema")
+    public ResponseEntity deletarUsuario(@PathVariable("id") Integer id) {
+        try {
+            this.usuarioService.deletarUsuario(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }catch (UsuarioNaoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
 
 

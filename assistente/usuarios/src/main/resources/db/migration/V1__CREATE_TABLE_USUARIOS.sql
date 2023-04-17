@@ -1,4 +1,4 @@
-CREATE TABLE tb_customer(
+CREATE TABLE usuarios(
     id serial primary key,
     username VARCHAR(200) NOT NULL,
     nome VARCHAR(400) NOT NULL,

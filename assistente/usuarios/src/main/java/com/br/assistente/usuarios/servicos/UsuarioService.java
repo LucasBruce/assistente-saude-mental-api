@@ -10,4 +10,5 @@ public interface UsuarioService {
     Usuarios getUsuario(Integer id) throws Exception;
     Usuarios salvarUsuario(Usuarios usuarios) throws Exception;
     Usuarios atualizarUsuario(Usuarios usuario) throws Exception;
+    void deletarUsuario(Integer id) throws  Exception;
 }

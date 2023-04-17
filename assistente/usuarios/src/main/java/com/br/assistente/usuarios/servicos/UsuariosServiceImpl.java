@@ -2,7 +2,7 @@ package com.br.assistente.usuarios.servicos;
 
 import com.br.assistente.usuarios.entidades.Usuarios;
 import com.br.assistente.usuarios.repositorios.UsuariosRepositorio;
-import org.springframework.data.domain.Page;
+import com.br.assistente.usuarios.servicos.exception.UsuarioNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 
@@ -52,9 +52,17 @@ public class UsuariosServiceImpl  implements UsuarioService{
     @Override
     public Usuarios atualizarUsuario(Usuarios usuario) throws Exception {
 
-        if (this.usuariosRepositorio.findById(usuario.getId()) == null) {
+        if (this.usuariosRepositorio.findById(usuario.getId()).isEmpty()) {
             throw new UsuarioNaoEncontradoException();
         }
         return this.usuariosRepositorio.save(usuario);
+    }
+
+    @Override
+    public void deletarUsuario(Integer id ) throws Exception {
+        if(this.usuariosRepositorio.findById(id).isEmpty()) {
+            throw new UsuarioNaoEncontradoException();
+        }
+        this.usuariosRepositorio.deleteById(id);
     }
 }
