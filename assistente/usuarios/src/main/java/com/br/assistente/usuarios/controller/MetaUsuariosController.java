@@ -7,7 +7,6 @@ import com.br.assistente.usuarios.utils.Constantes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ public class MetaUsuariosController {
     public ResponseEntity retornarMetaUsuarios(){
         try{
             return new ResponseEntity(this.metaUsuarioService.listarTodasMetas(), HttpStatus.OK);
-        } catch(RegistroNaoExitenteException e) {
+        } catch(RegistroNaoExistenteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch(Exception e) {
             return new ResponseEntity("Erro ao pesquisar vínculos", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,7 +60,7 @@ public class MetaUsuariosController {
         try {
             Date dataConvertida = new SimpleDateFormat("yyyy-MM-dd").parse(data);
             return new ResponseEntity(this.metaUsuarioService.listarMetaPorUsuarioIdEData(id, dataConvertida), HttpStatus.OK);
-        }catch (RegistroNaoExitenteException e){
+        }catch (RegistroNaoExistenteException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }catch (ParseException e) {
             return new ResponseEntity("Data informada é inválida. Informe no formato: yyyy/MM/dd (Ano - 4 dígitos, mês - 2 dígitos, dia - 2 dígitos)", HttpStatus.BAD_REQUEST);
@@ -125,7 +124,7 @@ public class MetaUsuariosController {
         try{
             this.metaUsuarioService.deletarMeta(id);
             return ResponseEntity.status(HttpStatus.OK).build();
-        }catch (RegistroNaoExitenteException e) {
+        }catch (RegistroNaoExistenteException e) {
             return new ResponseEntity("Meta informada (ID) não existe", HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

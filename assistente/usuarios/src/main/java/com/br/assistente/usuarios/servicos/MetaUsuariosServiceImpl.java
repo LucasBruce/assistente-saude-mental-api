@@ -30,7 +30,7 @@ public class MetaUsuariosServiceImpl implements MetaUsuarioService {
             metaUsuarios.add(todasMetas.next());
         }
         if (metaUsuarios.isEmpty()) {
-            throw new RegistroNaoExitenteException();
+            throw new RegistroNaoExistenteException();
         }
         return metaUsuarios;
     }
@@ -74,7 +74,7 @@ public class MetaUsuariosServiceImpl implements MetaUsuarioService {
             metaUsuarios.add(todasMetas.next());
         }
         if (metaUsuarios.isEmpty()) {
-            throw new RegistroNaoExitenteException();
+            throw new RegistroNaoExistenteException();
         }
         return metaUsuarios;
     }
@@ -83,7 +83,7 @@ public class MetaUsuariosServiceImpl implements MetaUsuarioService {
     public MetaUsuarios pesquisarMetaPorId(Integer metaId) throws Exception  {
         Optional<MetaUsuarios> metas = this.metaUsuariosRepositorio.findById(metaId);
         if(metas.isEmpty()) {
-            throw new RegistroNaoExitenteException();
+            throw new RegistroNaoExistenteException();
         }
         return metas.get();
     }
