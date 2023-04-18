@@ -1,7 +1,6 @@
 package com.br.assistente.usuarios.servicos;
 
 import com.br.assistente.usuarios.entidades.MetaUsuarios;
-import com.br.assistente.usuarios.entidades.Metas;
 import com.br.assistente.usuarios.repositorios.MetaUsuariosRepositorio;
 import com.br.assistente.usuarios.repositorios.MetasRepositorio;
 import com.br.assistente.usuarios.repositorios.UsuariosRepositorio;
@@ -38,6 +37,11 @@ public class MetaUsuariosServiceImpl implements MetaUsuarioService {
 
     @Override
     public MetaUsuarios salverMeta(MetaUsuarios metaUsuarios) throws Exception {
+        this.validarSalvarVinculoMetaUsuario(metaUsuarios);
+        return this.metaUsuariosRepositorio.save(metaUsuarios);
+    }
+
+    private void validarSalvarVinculoMetaUsuario(MetaUsuarios metaUsuarios) throws Exception {
         if (metaUsuarios.getMetaId() == null || this.metasRepositorio.findById(metaUsuarios.getMetaId()).isEmpty()) {
             throw new MetaEncontradaException();
         }
@@ -46,13 +50,11 @@ public class MetaUsuariosServiceImpl implements MetaUsuarioService {
         }
 
         if ( metaUsuarios.getUsuarioId() != null
-        && metaUsuarios.getDataMeta() != null
-        && metaUsuarios.getMetaId() != null
-        && !this.metaUsuariosRepositorio.findByUsuarioIdAndDataMetaAndMetaId(metaUsuarios.getUsuarioId(), metaUsuarios.getDataMeta(), metaUsuarios.getMetaId()).isEmpty()) {
+                && metaUsuarios.getDataMeta() != null
+                && metaUsuarios.getMetaId() != null
+                && !this.metaUsuariosRepositorio.findByUsuarioIdAndDataMetaAndMetaId(metaUsuarios.getUsuarioId(), metaUsuarios.getDataMeta(), metaUsuarios.getMetaId()).isEmpty()) {
             throw new MetaJaCadastradaParaODiaException();
         }
-
-        return this.metaUsuariosRepositorio.save(metaUsuarios);
     }
 
     @Override
@@ -89,7 +91,15 @@ public class MetaUsuariosServiceImpl implements MetaUsuarioService {
     @Override
     public MetaUsuarios atualizarMeta(MetaUsuarios metaUsuarios) throws Exception {
         try {
-            this.pesquisarMetaPorId(metaUsuarios.getMetaId());
+            if (metaUsuarios.getMetaId() == null || this.metasRepositorio.findById(metaUsuarios.getMetaId()).isEmpty()) {
+                throw new MetaEncontradaException();
+            }
+            if (metaUsuarios.getUsuarioId() == null || this.usuariosRepositorio.findById(metaUsuarios.getUsuarioId()).isEmpty()) {
+                throw new UsuarioNaoEncontradoException();
+            }
+            if (metaUsuarios.getId() == null || this.metaUsuariosRepositorio.findById(metaUsuarios.getId()).isEmpty()) {
+                throw new MetasNaoExisteException();
+            }
             return this.metaUsuariosRepositorio.save(metaUsuarios);
         }catch (Exception e) {
             throw e;
@@ -105,6 +115,8 @@ public class MetaUsuariosServiceImpl implements MetaUsuarioService {
             throw e;
         }
     }
+
+
 
 
 

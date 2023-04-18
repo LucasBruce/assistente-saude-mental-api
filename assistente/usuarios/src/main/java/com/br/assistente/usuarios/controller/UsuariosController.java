@@ -54,7 +54,7 @@ public class UsuariosController {
         }
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "/{id}")
     @Operation(summary = "Recupera usuário pelo seu identificador único")
     @ApiResponse(responseCode = "200", description = "Usuário recuperado com sucesso")
     public ResponseEntity findUser(@PathVariable("id") Integer id ) {
@@ -84,7 +84,7 @@ public class UsuariosController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Delete um usuário do sistema")
     @ApiResponse(responseCode = "200", description = "Usuário deletado do sistema")
     public ResponseEntity deletarUsuario(@PathVariable("id") Integer id) {

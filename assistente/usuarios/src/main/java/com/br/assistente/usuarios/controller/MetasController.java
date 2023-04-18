@@ -3,6 +3,7 @@ package com.br.assistente.usuarios.controller;
 import com.br.assistente.usuarios.entidades.Metas;
 import com.br.assistente.usuarios.servicos.MetaService;
 import com.br.assistente.usuarios.servicos.exception.MetaEncontradaException;
+import com.br.assistente.usuarios.servicos.exception.MetaJaCadastradaParaODiaException;
 import com.br.assistente.usuarios.servicos.exception.MetasNaoExisteException;
 import com.br.assistente.usuarios.utils.Constantes;
 import io.swagger.v3.oas.annotations.Operation;
@@ -82,7 +83,7 @@ public class MetasController {
             return new ResponseEntity(this.metaService.atualizarMeta(meta), HttpStatus.OK);
         }catch (MetasNaoExisteException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
+        }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 

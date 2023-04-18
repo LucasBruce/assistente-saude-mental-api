@@ -3,6 +3,7 @@ package com.br.assistente.usuarios.entidades;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.Set;
 
@@ -28,8 +29,10 @@ public class Usuarios {
     @Column(name = "senha")
     private String senha;
 
-    @ManyToMany (mappedBy = "usuarios")
-    private Set<Metas> metas;
+
+
+
+
 
 
 

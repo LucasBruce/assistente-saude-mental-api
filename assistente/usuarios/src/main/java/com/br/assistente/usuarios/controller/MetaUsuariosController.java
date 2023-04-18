@@ -2,17 +2,19 @@ package com.br.assistente.usuarios.controller;
 
 import com.br.assistente.usuarios.entidades.MetaUsuarios;
 import com.br.assistente.usuarios.servicos.MetaUsuarioService;
-import com.br.assistente.usuarios.servicos.exception.MetaEncontradaException;
-import com.br.assistente.usuarios.servicos.exception.MetaJaCadastradaParaODiaException;
-import com.br.assistente.usuarios.servicos.exception.RegistroNaoExitenteException;
-import com.br.assistente.usuarios.servicos.exception.UsuarioNaoEncontradoException;
+import com.br.assistente.usuarios.servicos.exception.*;
 import com.br.assistente.usuarios.utils.Constantes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.*;
+import java.util.Calendar;
+import java.util.Date;
 
 @RestController
 @RequestMapping(Constantes.PATH_META_USUARIOS)
@@ -38,11 +40,51 @@ public class MetaUsuariosController {
         }
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "pesquisar meta por ID")
+    @ApiResponse(responseCode = "200", description = "Vínculo retornado com sucesso")
+    public ResponseEntity retornarMetaPorId(@PathVariable("id") Integer id) {
+        try {
+         return new ResponseEntity(this.metaUsuarioService.listarMetaPorId(id), HttpStatus.OK);
+        }catch(MetasNaoExisteException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (Exception e) {
+            return new ResponseEntity("Erro ao pesquisar meta ", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
+    @GetMapping("/usuario/{id}/data/{data}")
+    @Operation(summary = "pesquisa as metas diárias de um usuário")
+    @ApiResponse(responseCode = "200", description = "Metas diárias retornadas com sucesso")
+    public ResponseEntity retornarMetaPorUsuario(@PathVariable("id") Integer id, @PathVariable("data") String data) {
+        try {
+            Date dataConvertida = new SimpleDateFormat("yyyy-MM-dd").parse(data);
+            return new ResponseEntity(this.metaUsuarioService.listarMetaPorUsuarioIdEData(id, dataConvertida), HttpStatus.OK);
+        }catch (RegistroNaoExitenteException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (ParseException e) {
+            return new ResponseEntity("Data informada é inválida. Informe no formato: yyyy/MM/dd (Ano - 4 dígitos, mês - 2 dígitos, dia - 2 dígitos)", HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e) {
+            return new ResponseEntity("Erro ao consultar metas para o usuário e dia", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @PostMapping
     @Operation(summary = "Vincula um usuário a uma meta e uma data")
     @ApiResponse(responseCode = "201", description = "Vinculos feitos com sucesso")
     public ResponseEntity vincularMetaAoUsuario(@RequestBody MetaUsuarios metaUsuarios) {
         try {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(metaUsuarios.getDataMeta());
+            cal.set(Calendar.HOUR_OF_DAY,0);
+            cal.set(Calendar.MINUTE,0);
+            cal.set(Calendar.SECOND,0);
+            cal.set(Calendar.MILLISECOND,0);
+            metaUsuarios.setDataMeta(cal.getTime());
+
             return new ResponseEntity(this.metaUsuarioService.salverMeta(metaUsuarios), HttpStatus.OK);
         } catch (MetaEncontradaException e) {
             return new ResponseEntity("Meta informada não foi encontrada", HttpStatus.NOT_FOUND);
@@ -55,6 +97,38 @@ public class MetaUsuariosController {
 
 
         }
+    }
 
+    @PutMapping
+    @Operation(summary = "Atualizar uma meta para um usuário específico")
+    @ApiResponse(responseCode = "200", description = "meta atualizada com sucesso")
+    public ResponseEntity atualizarMeta(@RequestBody MetaUsuarios metaUsuarios) {
+        try {
+            return new ResponseEntity(this.metaUsuarioService.atualizarMeta(metaUsuarios), HttpStatus.OK);
+        }catch (MetaEncontradaException e) {
+            return new ResponseEntity("Meta informada não foi encontrada", HttpStatus.BAD_REQUEST);
+        } catch (UsuarioNaoEncontradoException e) {
+            return new ResponseEntity("Usuário informado não foi encontrado", HttpStatus.BAD_REQUEST);
+        } catch(MetasNaoExisteException e) {
+            return new ResponseEntity("Meta informada (ID) não existente", HttpStatus.BAD_REQUEST);
+        } catch (MetaJaCadastradaParaODiaException e) {
+            return new ResponseEntity("Meta já cadastrada para o usuário e dia", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity("Erro ao atualizar meta", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deleta um meta")
+    @ApiResponse(responseCode = "200", description = "Meta deletada com sucesso")
+    public ResponseEntity deletarMeta(@PathVariable("id") Integer id) {
+        try{
+            this.metaUsuarioService.deletarMeta(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }catch (RegistroNaoExitenteException e) {
+            return new ResponseEntity("Meta informada (ID) não existe", HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
