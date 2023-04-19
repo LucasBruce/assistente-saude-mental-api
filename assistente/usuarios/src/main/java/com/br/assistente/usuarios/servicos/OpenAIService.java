@@ -4,6 +4,6 @@ import com.theokanning.openai.completion.CompletionRequest;
 
 public interface OpenAIService {
 
-    CompletionRequest requisitarMensagemOpenAI(String mensagem);
+    String requisitarMensagemOpenAI(String mensagem) throws Exception;
 
 }

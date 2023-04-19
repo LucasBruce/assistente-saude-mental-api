@@ -1,0 +1,1 @@
+ALTER TABLE token ADD COLUMN openai_url varchar(100)

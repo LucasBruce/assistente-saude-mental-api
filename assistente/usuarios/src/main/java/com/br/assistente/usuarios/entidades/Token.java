@@ -20,4 +20,7 @@ public class Token {
 
     @Column(name = "tipotoken")
     private String tipoToken;
+
+    @Column(name= "openai_url")
+    private String openAiURL;
 }
