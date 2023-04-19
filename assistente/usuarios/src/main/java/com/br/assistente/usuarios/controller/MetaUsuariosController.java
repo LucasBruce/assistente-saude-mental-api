@@ -17,6 +17,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping(Constantes.PATH_META_USUARIOS)
+@CrossOrigin(origins = {"http://localhost:4200"})
 @Tag(name = "path para gerenciamento da relação das metas com usuários", description ="path para gerenciamento da relação das metas com usuários")
 public class MetaUsuariosController {
 

@@ -3,7 +3,6 @@ package com.br.assistente.usuarios.controller;
 import com.br.assistente.usuarios.entidades.Metas;
 import com.br.assistente.usuarios.servicos.MetaService;
 import com.br.assistente.usuarios.servicos.exception.MetaEncontradaException;
-import com.br.assistente.usuarios.servicos.exception.MetaJaCadastradaParaODiaException;
 import com.br.assistente.usuarios.servicos.exception.MetasNaoExisteException;
 import com.br.assistente.usuarios.utils.Constantes;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(Constantes.PATH_METAS)
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class MetasController {
 
     private MetaService metaService;

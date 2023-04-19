@@ -14,4 +14,5 @@ public class Constantes {
     public static final String SYSTEM_ROLE_PARA_ARTIGOS = "Você é um doutor especialista no tema: #tema";
     public static final String REPLACE_PARA_TEMA = "#tema";
     public static final String PATH_PROFISSIONAIS = "/profissionais";
+    public static final String PATH_CONSULTAS = "/consultas";
 }

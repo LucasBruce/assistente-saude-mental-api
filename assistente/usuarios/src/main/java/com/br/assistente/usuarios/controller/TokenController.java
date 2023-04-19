@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(Constantes.PATH_TOKEN)
+@CrossOrigin(origins = {"http://localhost:4200"})
 @Tag(name = "path para gerenciamento do token utilizado para conexão com o OPENAPI", description ="path para gerenciamento do token utilizado para conexão com o OPENAPI")
 
 public class TokenController {

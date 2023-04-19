@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = Constantes.PATH_USUARIOS)
+@CrossOrigin(origins = {"http://localhost:4200"})
 @Tag(name="API para gerenciar usuarios", description = "API para criar, deletar, alterar e inserir usuários no sistema")
 public class UsuariosController {
 

@@ -18,6 +18,7 @@ import retrofit2.http.Path;
 
 @RestController
 @RequestMapping(Constantes.PATH_PROFISSIONAIS)
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class ProfissionaisController {
 
     private ProfissionaisService profissionaisService;
