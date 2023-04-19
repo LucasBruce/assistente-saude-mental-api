@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(Constantes.PATH_METAS)
+@CrossOrigin(origins = "*")
 public class MetasController {
 
     private MetaService metaService;
